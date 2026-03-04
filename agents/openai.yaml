@@ -1,0 +1,4 @@
+interface:
+  display_name: "River Codex Skill"
+  short_description: "Rigorous multi-step coding workflow for Codex"
+  default_prompt: "Use $river-codex-skill to plan, implement, review, and report a code change with staged quality gates."

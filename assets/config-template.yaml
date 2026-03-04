@@ -1,0 +1,35 @@
+language: ko
+
+base_branch:
+  name: auto
+  remote: origin
+  always_fetch: true
+
+session:
+  worktrees_dir: .river/worktrees
+  branch_prefix: codex/
+
+unit_limits:
+  max_files: 5
+  max_lines: 200
+
+size_thresholds:
+  function_lines: 50
+  file_lines: 300
+
+review_paths:
+  SMALL:
+    steps: [scope, plan, implement, targeted-review, regression, readiness]
+  STANDARD:
+    steps: [scope, plan, implement, review, regression, cleanup, readiness, report]
+  LARGE:
+    steps: [scope, plan, implement, review, regression, cleanup, readiness, report, failure-analysis]
+
+test_env:
+  check_before_test: true
+  skip_on_missing: true
+
+rules:
+  review_changed_files_first: true
+  mock_external_systems: true
+  forbid_force_push: true
