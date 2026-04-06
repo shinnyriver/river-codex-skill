@@ -34,6 +34,7 @@ Execute phases in order. Parallelize only independent reads and deterministic ch
 
 - Inspect the current code before proposing changes.
 - Identify what already exists, the minimum viable change, and the likely risk areas.
+- Identify cache impact, query count, join complexity, and likely DB hot paths before locking the plan.
 - Check whether the request appears to exceed the configured limits in `.river/workflow/config.yaml`.
 - If the work needs an isolated session, create a worktree on the branch from `.river/memory/branch-name.md`.
 
@@ -53,6 +54,13 @@ Execute phases in order. Parallelize only independent reads and deterministic ch
 
 - Read the relevant sections from [review-lenses.md](references/review-lenses.md) before editing risky domains.
 - Prefer incremental changes that preserve existing patterns.
+- Design classes with clear responsibilities, extension points, and object-oriented boundaries that respect SOLID principles.
+- Prefer domain behavior over anemic models: update state by sending messages to objects and keeping invariants inside the owning object.
+- Avoid broad getter/setter-driven mutation unless a framework requirement makes it necessary.
+- When the domain is non-trivial, favor DDD-style aggregates, entities, and value objects over procedural service-only state management.
+- Consider caching and DB performance early: avoid N+1 patterns, unnecessary entity loading, overly chatty repository access, and unbounded reads.
+- Use JPA for short, readable, low-complexity queries.
+- Use QueryDSL for long, join-heavy, dynamic, or projection-heavy queries where explicit composition improves readability and maintenance.
 - Use the bundled scripts for deterministic checks instead of re-deriving shell commands each time.
 
 Useful commands:
@@ -68,6 +76,8 @@ bash scripts/run-tests.sh /absolute/path/to/project
 
 - Review only the changed files first.
 - Load [review-lenses.md](references/review-lenses.md) only for the domains present in the change.
+- Check whether the change preserves domain invariants, avoids setter-centric state updates, and keeps query logic in the appropriate persistence tool.
+- Review cache usage, query count, fetch strategy, and join complexity before calling the change ready.
 - Run the appropriate checks:
 
 ```bash
@@ -112,3 +122,17 @@ Rules:
 - Treat this as a Codex workflow guide, not an autonomous multi-agent system.
 - Keep memory files short and actionable.
 - Prefer local verification and repository evidence over speculative redesign.
+
+## Design Defaults
+
+- Default to object-oriented designs that remain open to extension without spreading responsibilities across god classes.
+- Prefer behavior-rich domain objects over setter-driven data containers.
+- Treat cache strategy and DB performance as first-class design concerns, not late-stage cleanup.
+- Default persistence choice:
+  - JPA for short and simple queries.
+  - QueryDSL for long, join-heavy, or dynamically composed queries.
+
+## Git Convention
+
+- Every Commit must be in the following format
+- `:gitmoji: type: message`
