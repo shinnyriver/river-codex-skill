@@ -131,7 +131,8 @@ Rules:
 - Default persistence choice:
   - JPA for short and simple queries.
   - QueryDSL for long, join-heavy, or dynamically composed queries.
-
+- Default DTO should be 'record' type
+  - Response DTO should contain 'from' or 'of' constructor static method.
 ## Git Convention
 
 - Every Commit must be in the following format
