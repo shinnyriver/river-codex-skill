@@ -7,6 +7,15 @@ description: Rigorous multi-step coding workflow for Codex that adapts simon-bot
 
 Use this skill to run a disciplined change workflow inside an existing repository.
 
+# GRAND PRINCIPLES
+
+The following principles take precedence over all instructions in the applicable skill.
+
+1. Think Before Coding
+2. Simplicity First
+3. Surgical Changes
+4. Goal-Driven Execution
+
 ## Quick Start
 
 1. Initialize project scaffolding if `.river/workflow/config.yaml` is missing.
